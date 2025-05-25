@@ -1,5 +1,33 @@
 #include <stdio.h>
 
+// Função recursiva para movimentar a Torre (direita)
+void moverTorre(int passos) {
+    if (passos <= 0) return;
+    printf("  Direita\n");
+    moverTorre(passos - 1);
+}
+
+// Função recursiva para movimentar a Rainha (esquerda)
+void moverRainha(int passos) {
+    if (passos <= 0) return;
+    printf("  Esquerda\n");
+    moverRainha(passos - 1);
+}
+
+// Função recursiva com loops aninhados para movimentar o Bispo (diagonal cima-direita)
+void moverBispo(int passos) {
+    if (passos <= 0) return;
+    // Loop vertical
+    for (int v = 0; v < 1; v++) {
+        printf("  Cima\n");
+        // Loop horizontal
+        for (int h = 0; h < 1; h++) {
+            printf("  Direita\n");
+        }
+    }
+    moverBispo(passos - 1);
+}
+
 int main() {
     // Quantidade movimentos de cada peça
     const int movTorre   = 5;
@@ -8,46 +36,32 @@ int main() {
     const int movCavaloV = 2;
     const int movCavaloH = 1;
 
-    int i, j;
-
-    // Movimentação da torre
+    // Torre
     printf("Movimento da Torre (%d casas para a direita):\n", movTorre);
-    for (i = 0; i < movTorre; i++) {
-        printf("  Direita\n");
-    }
+    moverTorre(movTorre);
 
-    // Movimentação do bispo
+    // Bispo
     printf("\nMovimento do Bispo (%d casas diagonal cima-direita):\n", movBispo);
-    i = 0;
-    while (i < movBispo) {
-        printf("  Cima, Direita\n");
-        i++;
-    }
+    moverBispo(movBispo);
 
-    // Movimentação da rainha
+    // Rainha
     printf("\nMovimento da Rainha (%d casas para a esquerda):\n", movRainha);
-    i = 0;
-    do {
-        printf("  Esquerda\n");
-        i++;
-    } while (i < movRainha);
+    moverRainha(movRainha);
 
-    // Movimentação do cavalo
-    // O cavalo deve se mover em L sendo duas casas para baixo e uma para a esquerda
-    printf("\nMovimento do Cavalo (2 baixo + 1 esquerda):\n");
-    // Esse for engloba o movimento do cavalo como um todo, incluindo seus movimentos verticais e horizontais
-    for (i = 0; i < 1; i++) {
-        // Movimento vertical (2 casas para baixo)
-        j = 0;
-        while (j < movCavaloV) {
-            printf("  Baixo\n");
-            j++;
+    // Cavalo
+    printf("\nMovimento do Cavalo (2 cima + 1 direita):\n");
+    // Variáveis indicando quantos movimentos já fizemos para cada direção
+    int v = 0, h = 0;
+    // While com condição múltipla
+    while (v < movCavaloV || h < movCavaloH) {
+        if (v < movCavaloV) {
+            printf("  Cima\n");
+            v++;
+            continue;  // Volta ao início para relizar todos os movimentos verticais antes do movimento horizontal
         }
-        // Movimento horizontal (1 casa para a esquerda)
-        j = 0;
-        while (j < movCavaloH) {
-            printf("  Esquerda\n");
-            j++;
+        if (h < movCavaloH) {
+            printf("  Direita\n");
+            h++;
         }
     }
 
